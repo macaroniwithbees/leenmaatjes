@@ -5,7 +5,7 @@ import Home from "./screens/Home";
 
 export default function App() {
   return (
-    <View className="flex-1 bg-gray-50">
+    <View className="flex-1 bg-gray-100">
       <StatusBar style="dark" />
       <Home />
     </View>
