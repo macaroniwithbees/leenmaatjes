@@ -122,7 +122,32 @@ export default function ItemDetailScreen() {
         </Text>
       </View>
 
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
+        {/* Image placeholder */}
+        <View className="mx-5 rounded-2xl bg-orange-100 items-center justify-center" style={{ height: 220 }}>
+          <Text style={{ fontSize: 80 }}>{item.emoji}</Text>
+        </View>
 
+         {/* Title + distance */}
+         <View className="px-5 mt-4 flex-row items-start justify-between">
+            <Text className="text-2xl font-bold text-gray-800 flex-1">
+              {item.label}
+            </Text>
+            <View className="flex-row items-center bg-orange-100 px-2.5 py-1 rounded-full ml-3 mt-1">
+              <MapPin size={12} color={ACCENT} strokeWidth={2} />
+              <Text className="text-xs font-semibold text-orange-500 ml-1">
+                {item.distance}
+              </Text>
+            </View>
+         </View>
+
+         <View className="px-5 mt-1 flex-row items-center">
+            <MapPin size={12} color="#9ca3af" strokeWidth={1.8} />
+            <Text className="text-xs text-gray-400 ml-1">{item.location}</Text>
+         </View>
+
+         {/* Description */}
+      </ScrollView>
     </SafeAreaView>
   )
 }
