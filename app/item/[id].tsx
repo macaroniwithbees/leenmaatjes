@@ -173,7 +173,47 @@ export default function ItemDetailScreen() {
             <Text className="text-xs font-semibold text-orange-400">Profiel</Text>
           </View>
         </View>
+
+        {/* Availability */}
+        <View className="px-5 mt-6">
+          <Text className="text-lg font-bold text-gray-800 mb-3">Beschikbaarheid</Text>
+          <View className="bg-white rounded-2xl p-4 shadow-sm">
+            <Text className="text-xs font-semibold text-gray-400 mb-3 uppercase tracking-wide">
+              Juni 2026
+            </Text>
+            {/* Add a calender here */}
+          </View>
+        </View>
+
+        {/* Reviews */}
+        <View className="px-5 mt-6">
+          <Text className="text-lg font-bold text-gray-800 mb-3">Beoordelingen</Text>
+          <View className="space-y-3">
+            {item.reviews.map((review: any) => (
+              <View key={review.id} className="bg-white rounded-2xl p-4 shadow-sm">
+                <View className="flex-row items-center mb-2">
+                  <View className="w-8 h-8 bg-orange-100 rounded-full items-center justify-center">
+                    <Text className="text-xs font-bold text-orange-500">
+                      {review.author[0]}
+                    </Text>
+                  </View>
+                  <Text className="ml-2 text-sm font-semibold text-gray-800">
+                    {review.author}
+                  </Text>
+                  <View className="flex-row ml-auto">
+                    {Array.from({ length: review.rating}).map((_, i) => (
+                      <Star key={i} size={11} color="#f97316" fill="#f97316" />
+                    ))}
+                  </View>
+                </View>
+                <Text className="text-sm text-gray-500">{review.text}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
       </ScrollView>
+
+      {/* Action buttons here */}
     </SafeAreaView>
   )
 }
