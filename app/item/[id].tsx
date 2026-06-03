@@ -68,7 +68,7 @@ const ITEM_DATA: Record<string, any> = {
     ownerInitial: "M",
     ownerRating: 3.8,
     ownerLendings: 12,
-    distance: "0.3 km",
+    distance: "1.2 km",
     location: "Ede, Gelderland",
     reviews: [
       { id: "1", author: "Tom", rating: 5, text: "Super gitaar, deed het perfect!" },
@@ -77,7 +77,7 @@ const ITEM_DATA: Record<string, any> = {
     ],
     availableDays: [3, 4, 5, 8, 9, 10, 11, 14, 15, 17, 18],
   },
-   "4": {
+  "4": {
     id: "4",
     label: "Camera",
     emoji: "📷",
@@ -87,7 +87,7 @@ const ITEM_DATA: Record<string, any> = {
     ownerInitial: "N",
     ownerRating: 4.9,
     ownerLendings: 15,
-    distance: "0.6 km",
+    distance: "1.5 km",
     location: "Ede, Gelderland",
     reviews: [
       { id: "1", author: "Tom", rating: 5, text: "Super gitaar, deed het perfect!" },
@@ -128,25 +128,51 @@ export default function ItemDetailScreen() {
           <Text style={{ fontSize: 80 }}>{item.emoji}</Text>
         </View>
 
-         {/* Title + distance */}
-         <View className="px-5 mt-4 flex-row items-start justify-between">
-            <Text className="text-2xl font-bold text-gray-800 flex-1">
-              {item.label}
+        {/* Title + distance */}
+        <View className="px-5 mt-4 flex-row items-start justify-between">
+          <Text className="text-2xl font-bold text-gray-800 flex-1">
+            {item.label}
+          </Text>
+          <View className="flex-row items-center bg-orange-100 px-2.5 py-1 rounded-full ml-3 mt-1">
+            <MapPin size={12} color={ACCENT} strokeWidth={2} />
+            <Text className="text-xs font-semibold text-orange-500 ml-1">
+              {item.distance}
             </Text>
-            <View className="flex-row items-center bg-orange-100 px-2.5 py-1 rounded-full ml-3 mt-1">
-              <MapPin size={12} color={ACCENT} strokeWidth={2} />
-              <Text className="text-xs font-semibold text-orange-500 ml-1">
-                {item.distance}
+          </View>
+        </View>
+
+        <View className="px-5 mt-1 flex-row items-center">
+          <MapPin size={12} color="#9ca3af" strokeWidth={1.8} />
+          <Text className="text-xs text-gray-400 ml-1">{item.location}</Text>
+        </View>
+
+        {/* Description */}
+        <View className="px-5 mt-4">
+          <Text className="text-sm text-gray-500 leading-5">
+            {item.description}
+          </Text>
+        </View>
+
+        {/* Owner card */}
+        <View className="mx-5 mt-5 bg-white rounded-2xl p-4 flex-row items-center shadow-sm">
+          <View className="w-12 h-12 bg-orange-100 rounded-full items-center shadow-sm">
+            <Text className="text-lg font-bold text-orange-500">
+              {item.ownerInitial}
+            </Text>
+          </View>
+          <View className="ml-3 flex-1">
+            <Text className="text-sm font-bold text-gray-800">{item.owner}</Text>
+            <View className="flex-row items-center mt-0.5">
+              <Star size={12} color="#f97316" fill="#f97316" />
+              <Text className="text-xs text-gray-500 ml-1">
+                {item.ownerRating} | {item.ownerLendings} leningen
               </Text>
             </View>
-         </View>
-
-         <View className="px-5 mt-1 flex-row items-center">
-            <MapPin size={12} color="#9ca3af" strokeWidth={1.8} />
-            <Text className="text-xs text-gray-400 ml-1">{item.location}</Text>
-         </View>
-
-         {/* Description */}
+          </View>
+          <View className="bg-orange-50 px-3 py-1.5 rounded-xl">
+            <Text className="text-xs font-semibold text-orange-400">Profiel</Text>
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   )
