@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 import { PlusCircle, Search, Package, Users } from "lucide-react-native";
 
 const ACTIVE_LOANS = [
@@ -39,9 +40,10 @@ const QUICK_ACTIONS = [
 ];
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   return (
     <SafeAreaView className="flex-1 bg-orange-50" edges={["top"]}>
-      {/* Header */}
       <View className="px-5 pt-2 pb-3 bg-orange-50 flex-row items-center justify-between">
         <Text className="text-xl font-bold text-orange-500">Leenmaat</Text>
         <View className="w-9 h-9 bg-orange-100 rounded-full items-center justify-center">
@@ -153,6 +155,7 @@ export default function HomeScreen() {
               <TouchableOpacity
                 key={item.id}
                 activeOpacity={0.8}
+                onPress={() => router.push(`/item/${item.id}`)}
                 className="flex-row items-center bg-white rounded-2xl px-4 py-3 shadow-sm shadow-orange-100"
               >
                 <View className="w-11 h-11 bg-orange-50 rounded-xl items-center justify-center">
