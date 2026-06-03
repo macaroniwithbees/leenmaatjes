@@ -214,6 +214,16 @@ export default function ItemDetailScreen() {
       </ScrollView>
 
       {/* Action buttons here */}
+      <View className="absolute bottom-0 left-0 right-0 bg-orange-50 px-5 pt-3 pb-8 border-t border-orange-100 flex-row gap-3">
+        <TouchableOpacity activeOpacity={0.8} className="flex-1 flex-row items-center justify-center bg-white border border-orange-200 rounded-2xl py-4 gap-2">
+          <MessageCircle size={18} color={ACCENT} strokeWidth={2} />
+          <Text className="text-sm font-bold text-orange-400">Chat</Text>
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.8} className="flex-2 flex-row items-center justify-center bg-orange-400 rounded-2xl py-4 px-6 gap-2">
+          <HandHelping size={18} color="white" strokeWidth={2} />
+          <Text className="text-sm font-bold text-white">Leen</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   )
 }
