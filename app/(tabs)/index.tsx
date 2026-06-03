@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
-import Header from "../components/Header";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { PlusCircle, Search, Package, Users } from "lucide-react-native";
 
 const ACTIVE_LOANS = [
@@ -32,25 +32,31 @@ const NEARBY_ITEMS = [
 ];
 
 const QUICK_ACTIONS = [
-  { icon: PlusCircle, label: "Leen uit", color: "#f97316" },
-  { icon: Search, label: "Zoek item", color: "#f97316" },
-  { icon: Package, label: "Mijn items", color: "#f97316" },
-  { icon: Users, label: "Vrienden", color: "#f97316" },
+  { icon: PlusCircle, label: "Leen uit" },
+  { icon: Search, label: "Zoek item" },
+  { icon: Package, label: "Mijn items" },
+  { icon: Users, label: "Vrienden" },
 ];
 
-export default function Home() {
+export default function HomeScreen() {
   return (
-    <View className="flex-1 bg-orange-100">
-      <Header title="Welkom bij Leenmaat" />
+    <SafeAreaView className="flex-1 bg-orange-50" edges={["top"]}>
+      {/* Header */}
+      <View className="px-5 pt-2 pb-3 bg-orange-50 flex-row items-center justify-between">
+        <Text className="text-xl font-bold text-orange-500">Leenmaat</Text>
+        <View className="w-9 h-9 bg-orange-100 rounded-full items-center justify-center">
+          <Text className="text-sm font-bold text-orange-500">F</Text>
+        </View>
+      </View>
 
       <ScrollView
         contentContainerStyle={{ paddingBottom: 32 }}
         showsVerticalScrollIndicator={false}
       >
-        {/* Hero greeting */}
-        <View className="px-5 pt-6 pb-2">
+        {/* Greeting */}
+        <View className="px-5 pt-2 pb-2">
           <Text className="text-3xl font-bold text-gray-800 leading-tight">
-            Hoi Floris!
+            Hoi Floris! 
           </Text>
           <Text className="text-base text-gray-500 mt-1">
             Wat wil je vandaag lenen of uitlenen?
@@ -60,13 +66,19 @@ export default function Home() {
         {/* Quick actions */}
         <View className="flex-row justify-between px-5 mt-5">
           {QUICK_ACTIONS.map((action) => {
-            const Icon = action.icon; 
+            const Icon = action.icon;
             return (
-              <TouchableOpacity key={action.label} activeOpacity={0.75} className="items-center">
+              <TouchableOpacity
+                key={action.label}
+                activeOpacity={0.75}
+                className="items-center"
+              >
                 <View className="w-16 h-16 bg-white rounded-2xl items-center justify-center shadow shadow-orange-100">
-                  <Icon size={26} color={action.color} strokeWidth={1.8} />
+                  <Icon size={26} color="#f97316" strokeWidth={1.8} />
                 </View>
-                <Text className="text-xs text-gray-500 mt-1.5 font-medium">{action.label}</Text>
+                <Text className="text-xs text-gray-500 mt-1.5 font-medium">
+                  {action.label}
+                </Text>
               </TouchableOpacity>
             );
           })}
@@ -93,8 +105,7 @@ export default function Home() {
                 className={`mr-3 p-4 rounded-2xl ${loan.color} w-44`}
               >
                 <View className="flex-row items-center mb-3">
-                  <View className="w-8 h-8 rounded-full bg-white items-center justify-center overflow-hidden">
-                    {/* Placeholder avatar initial */}
+                  <View className="w-8 h-8 rounded-full bg-white items-center justify-center">
                     <Text className={`text-sm font-bold ${loan.accent}`}>
                       {loan.from[0]}
                     </Text>
@@ -114,11 +125,9 @@ export default function Home() {
                 </View>
               </TouchableOpacity>
             ))}
-
-            {/* Empty-state nudge */}
             <TouchableOpacity
               activeOpacity={0.75}
-              className="w-44 h-full min-h-[120px] border-2 border-dashed border-orange-200 rounded-2xl items-center justify-center px-4"
+              className="w-44 min-h-[120px] border-2 border-dashed border-orange-200 rounded-2xl items-center justify-center px-4"
             >
               <Text className="text-xs text-center text-gray-400 font-medium">
                 Leen iets uit aan een vriend
@@ -139,7 +148,6 @@ export default function Home() {
               </Text>
             </TouchableOpacity>
           </View>
-
           <View className="space-y-2">
             {NEARBY_ITEMS.map((item) => (
               <TouchableOpacity
@@ -171,10 +179,10 @@ export default function Home() {
         {/* CTA banner */}
         <View className="mx-5 mt-7 bg-orange-400 rounded-2xl px-5 py-5">
           <Text className="text-white font-bold text-base">
-            Heb je iets te leen?
+            Heb je iets te leen? 
           </Text>
           <Text className="text-orange-100 text-sm mt-1 mb-3">
-            Help je buren en leen stuff.
+            Help je buren en verdien wat terug.
           </Text>
           <TouchableOpacity
             className="bg-white self-start px-4 py-2 rounded-xl"
@@ -186,6 +194,6 @@ export default function Home() {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
