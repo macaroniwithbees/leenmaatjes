@@ -58,6 +58,44 @@ const ITEM_DATA: Record<string, any> = {
     ],
     availableDays: [1, 2, 6, 7, 12, 13, 16, 19, 20],
   },
+  "3": {
+    id: "3",
+    label: "Tent",
+    emoji: "⛺",
+    description:
+      "Klein tentje om mee te kamperen.",
+    owner: "Mees",
+    ownerInitial: "M",
+    ownerRating: 3.8,
+    ownerLendings: 12,
+    distance: "0.3 km",
+    location: "Ede, Gelderland",
+    reviews: [
+      { id: "1", author: "Tom", rating: 5, text: "Super gitaar, deed het perfect!" },
+      { id: "2", author: "Mees", rating: 5, text: "Lisa was super vriendelijk en de gitaar was top." },
+      { id: "3", author: "Nora", rating: 4, text: "Goede gitaar, kleine kras maar geen probleem." },
+    ],
+    availableDays: [3, 4, 5, 8, 9, 10, 11, 14, 15, 17, 18],
+  },
+   "4": {
+    id: "4",
+    label: "Camera",
+    emoji: "📷",
+    description:
+      "Camera te leen om natuurfoto's mee te maken.",
+    owner: "Nora",
+    ownerInitial: "N",
+    ownerRating: 4.9,
+    ownerLendings: 15,
+    distance: "0.6 km",
+    location: "Ede, Gelderland",
+    reviews: [
+      { id: "1", author: "Tom", rating: 5, text: "Super gitaar, deed het perfect!" },
+      { id: "2", author: "Mees", rating: 5, text: "Lisa was super vriendelijk en de gitaar was top." },
+      { id: "3", author: "Nora", rating: 4, text: "Goede gitaar, kleine kras maar geen probleem." },
+    ],
+    availableDays: [3, 4, 5, 8, 9, 10, 11, 14, 15, 17, 18],
+  }
 };
 
 const MONTH_DAYS = 20;
@@ -79,7 +117,12 @@ export default function ItemDetailScreen() {
           className="w-9 h-9 bg-white rounded-xl items-center justify-center shadow-sm">
           <ArrowLeft size={20} color="#374151" strokeWidth={2} />
         </TouchableOpacity>
+        <Text className="ml-3 text-lg font-bold text-gray-800">
+          {item.label}
+        </Text>
       </View>
+
+
     </SafeAreaView>
   )
 }
