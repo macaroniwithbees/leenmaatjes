@@ -72,7 +72,14 @@ export default function ItemDetailScreen() {
 
     return (
         <SafeAreaView className="flex-1 bg-orange-50" edges={["top"]}>
-            
+            {/* Header */}
+            <View className="flex-row items-center px-4 py-3">
+                <TouchableOpacity
+                    onPress={() => router.back()}
+                    className="w-9 h-9 bg-white rounded-xl items-center justify-center shadow-sm">
+                        <ArrowLeft size={20} color="#374151" strokeWidth={2} />
+                    </TouchableOpacity>
+            </View>
         </SafeAreaView>
     )
 }
