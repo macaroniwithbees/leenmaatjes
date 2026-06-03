@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import {
-    View,
-    Text,
-    ScrollView, 
-    TouchableOpacity,
-    Image,
-    Dimensions
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  Dimensions
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import {
-    ArrowLeft,
-    MapPin,
-    Star,
-    MessageCircle,
-    HandHelping,
-    ChevronLeft,
-    ChevronRight,
+  ArrowLeft,
+  MapPin,
+  Star,
+  MessageCircle,
+  HandHelping,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react-native";
 
 const { width } = Dimensions.get("window");
@@ -66,20 +66,20 @@ const TODAY = 3;
 const ACCENT = "#f97316";
 
 export default function ItemDetailScreen() {
-    const { id } = useLocalSearchParams<{ id: string }>();
-    const router = useRouter();
-    const item = ITEM_DATA[id ?? "1"] ?? ITEM_DATA["1"];
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const router = useRouter();
+  const item = ITEM_DATA[id ?? "1"] ?? ITEM_DATA["1"];
 
-    return (
-        <SafeAreaView className="flex-1 bg-orange-50" edges={["top"]}>
-            {/* Header */}
-            <View className="flex-row items-center px-4 py-3">
-                <TouchableOpacity
-                    onPress={() => router.back()}
-                    className="w-9 h-9 bg-white rounded-xl items-center justify-center shadow-sm">
-                        <ArrowLeft size={20} color="#374151" strokeWidth={2} />
-                    </TouchableOpacity>
-            </View>
-        </SafeAreaView>
-    )
+  return (
+    <SafeAreaView className="flex-1 bg-orange-50" edges={["top"]}>
+      {/* Header */}
+      <View className="flex-row items-center px-4 py-3">
+        <TouchableOpacity
+          onPress={() => router.back()}
+          className="w-9 h-9 bg-white rounded-xl items-center justify-center shadow-sm">
+          <ArrowLeft size={20} color="#374151" strokeWidth={2} />
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  )
 }
