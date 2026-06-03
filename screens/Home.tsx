@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import Header from "../components/Header";
+import { PlusCircle, Search, Package, Users } from "lucide-react-native";
 
 const ACTIVE_LOANS = [
   {
@@ -22,27 +23,27 @@ const ACTIVE_LOANS = [
     dot: "bg-rose-400",
   },
 ];
- 
+
 const NEARBY_ITEMS = [
   { id: "1", emoji: "🎸", label: "Gitaar", owner: "Lisa", distance: "0.3 km" },
   { id: "2", emoji: "🚲", label: "Fiets", owner: "Tom", distance: "0.8 km" },
   { id: "3", emoji: "⛺", label: "Tent", owner: "Mees", distance: "1.2 km" },
   { id: "4", emoji: "📷", label: "Camera", owner: "Nora", distance: "1.5 km" },
 ];
- 
+
 const QUICK_ACTIONS = [
-  { label: "Leen uit" },
-  { label: "Zoek item" },
-  { label: "Mijn items" },
-  { label: "Vrienden" },
+  { icon: PlusCircle, label: "Leen uit", color: "#f97316" },
+  { icon: Search, label: "Zoek item", color: "#f97316" },
+  { icon: Package, label: "Mijn items", color: "#f97316" },
+  { icon: Users, label: "Vrienden", color: "#f97316" },
 ];
- 
+
 export default function Home() {
   return (
     <View className="flex-1 bg-orange-100">
       <Header title="Welkom bij Leenmaat" />
 
-           <ScrollView
+      <ScrollView
         contentContainerStyle={{ paddingBottom: 32 }}
         showsVerticalScrollIndicator={false}
       >
@@ -55,24 +56,22 @@ export default function Home() {
             Wat wil je vandaag lenen of uitlenen?
           </Text>
         </View>
- 
+
         {/* Quick actions */}
         <View className="flex-row justify-between px-5 mt-5">
-          {QUICK_ACTIONS.map((action) => (
-            <TouchableOpacity
-              key={action.label}
-              activeOpacity={0.75}
-              className="items-center"
-            >
-              <View className="w-16 h-16 bg-white rounded-2xl items-center justify-center shadow shadow-orange-100">
-              </View>
-              <Text className="text-xs text-gray-500 mt-1.5 font-medium">
-                {action.label}
-              </Text>
-            </TouchableOpacity>
-          ))}
+          {QUICK_ACTIONS.map((action) => {
+            const Icon = action.icon; 
+            return (
+              <TouchableOpacity key={action.label} activeOpacity={0.75} className="items-center">
+                <View className="w-16 h-16 bg-white rounded-2xl items-center justify-center shadow shadow-orange-100">
+                  <Icon size={26} color={action.color} strokeWidth={1.8} />
+                </View>
+                <Text className="text-xs text-gray-500 mt-1.5 font-medium">{action.label}</Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
- 
+
         {/* Active loans */}
         <View className="mt-7 px-5">
           <View className="flex-row justify-between items-center mb-3">
@@ -85,7 +84,7 @@ export default function Home() {
               </Text>
             </TouchableOpacity>
           </View>
- 
+
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {ACTIVE_LOANS.map((loan) => (
               <TouchableOpacity
@@ -115,7 +114,7 @@ export default function Home() {
                 </View>
               </TouchableOpacity>
             ))}
- 
+
             {/* Empty-state nudge */}
             <TouchableOpacity
               activeOpacity={0.75}
@@ -127,7 +126,7 @@ export default function Home() {
             </TouchableOpacity>
           </ScrollView>
         </View>
- 
+
         {/* Nearby items */}
         <View className="mt-7 px-5">
           <View className="flex-row justify-between items-center mb-3">
@@ -140,7 +139,7 @@ export default function Home() {
               </Text>
             </TouchableOpacity>
           </View>
- 
+
           <View className="space-y-2">
             {NEARBY_ITEMS.map((item) => (
               <TouchableOpacity
@@ -168,11 +167,11 @@ export default function Home() {
             ))}
           </View>
         </View>
- 
+
         {/* CTA banner */}
         <View className="mx-5 mt-7 bg-orange-400 rounded-2xl px-5 py-5">
           <Text className="text-white font-bold text-base">
-            Heb je iets te leen? 
+            Heb je iets te leen?
           </Text>
           <Text className="text-orange-100 text-sm mt-1 mb-3">
             Help je buren en leen stuff.
