@@ -71,9 +71,9 @@ const ITEM_DATA: Record<string, any> = {
     distance: "1.2 km",
     location: "Ede, Gelderland",
     reviews: [
-      { id: "1", author: "Tom", rating: 5, text: "Super gitaar, deed het perfect!" },
-      { id: "2", author: "Mees", rating: 5, text: "Lisa was super vriendelijk en de gitaar was top." },
-      { id: "3", author: "Nora", rating: 4, text: "Goede gitaar, kleine kras maar geen probleem." },
+      { id: "1", author: "Tom", rating: 3, text: "Goed tent, maar Mees kan wel vriendelijker zijn." },
+      { id: "2", author: "Lisa", rating: 3.5, text: "Toppunt: de tent. Minpunt: Mees." },
+      { id: "3", author: "Nora", rating: 4, text: "Goede tent, maar wel wat scheuren." },
     ],
     availableDays: [3, 4, 5, 8, 9, 10, 11, 14, 15, 17, 18],
   },
@@ -90,9 +90,9 @@ const ITEM_DATA: Record<string, any> = {
     distance: "1.5 km",
     location: "Ede, Gelderland",
     reviews: [
-      { id: "1", author: "Tom", rating: 5, text: "Super gitaar, deed het perfect!" },
-      { id: "2", author: "Mees", rating: 5, text: "Lisa was super vriendelijk en de gitaar was top." },
-      { id: "3", author: "Nora", rating: 4, text: "Goede gitaar, kleine kras maar geen probleem." },
+      { id: "1", author: "Tom", rating: 5, text:"Top camera" },
+      { id: "2", author: "Mees", rating: 5, text: "Super. Thnx Nora." },
+      { id: "3", author: "Lisa", rating: 4, text: "Super camera, heb goede fotos gemaakt voor mijn winkeltje." },
     ],
     availableDays: [3, 4, 5, 8, 9, 10, 11, 14, 15, 17, 18],
   }
