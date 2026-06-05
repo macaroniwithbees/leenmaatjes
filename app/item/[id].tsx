@@ -90,7 +90,7 @@ const ITEM_DATA: Record<string, any> = {
     distance: "1.5 km",
     location: "Ede, Gelderland",
     reviews: [
-      { id: "1", author: "Tom", rating: 5, text:"Top camera" },
+      { id: "1", author: "Tom", rating: 5, text: "Top camera" },
       { id: "2", author: "Mees", rating: 5, text: "Super. Thnx Nora." },
       { id: "3", author: "Lisa", rating: 4, text: "Super camera, heb goede fotos gemaakt voor mijn winkeltje." },
     ],
@@ -102,6 +102,61 @@ const MONTH_DAYS = 20;
 const TODAY = 3;
 
 const ACCENT = "#f97316";
+
+// calendar component here 
+function AvailabilityCalendar({ availableDays }: { availableDays: number[] }) {
+  const [selected, setSelected] = useState<number | null>(null);
+  const days = Array.from({ length: MONTH_DAYS }, (_, i) => i + 1);
+
+  return (
+    <View>
+      <View className="flex-row flex-wrap gap-2">
+        {days.map((day) => {
+          const isAvailable = availableDays.includes(day);
+          const isSelected = selected === day;
+          const isPast = day < TODAY;
+
+          return (
+            <TouchableOpacity
+              key={day}
+              disabled={!isAvailable || isPast}
+              onPress={() => setSelected(isSelected ? null : day)}
+              className={`w-9 h-9 rounded-xl items-center justify-center
+                ${isSelected ? "bg-orange-400" : ""}
+                ${!isSelected && isAvailable && !isPast ? "bg-orange-100" : ""}
+                ${!isAvailable || isPast ? "bg-gray-100" : ""}
+              `}
+            >
+              <Text
+                className={`text-xs font-semibold
+                  ${isSelected ? "text-white" : ""}
+                  ${!isSelected && isAvailable && !isPast ? "text-orange-500" : ""}
+                  ${!isAvailable || isPast ? "text-gray-300" : ""}
+                `}
+              >
+                {day}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+      <View className="flex-row mt-3 gap-4">
+        <View className="flex-row items-center gap-1.5">
+          <View className="w-3 h-3 rounded-sm bg-orange-100" />
+          <Text className="text-xs text-gray-600">Beschikbaar</Text>
+        </View>
+        <View className="flex-row items-center gap-1.5">
+          <View className="w-3 h-3 rounded-sm bg-orange-400" />
+          <Text className="text-xs text-gray-600">Geselecteerd</Text>
+        </View>
+        <View className="flex-row items-center gap-1.5">
+          <View className="w-3 h-3 rounded-sm bg-gray-100" />
+          <Text className="text-xs text-gray-600">Niet beschikbaar</Text>
+        </View>
+      </View>
+    </View>
+  )
+}
 
 export default function ItemDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -181,7 +236,7 @@ export default function ItemDetailScreen() {
             <Text className="text-xs font-semibold text-gray-400 mb-3 uppercase tracking-wide">
               Juni 2026
             </Text>
-            {/* Add a calender here */}
+            <AvailabilityCalendar availableDays={item.availableDays} />
           </View>
         </View>
 
@@ -201,7 +256,7 @@ export default function ItemDetailScreen() {
                     {review.author}
                   </Text>
                   <View className="flex-row ml-auto">
-                    {Array.from({ length: review.rating}).map((_, i) => (
+                    {Array.from({ length: review.rating }).map((_, i) => (
                       <Star key={i} size={11} color="#f97316" fill="#f97316" />
                     ))}
                   </View>
