@@ -74,6 +74,9 @@ export default function HomeScreen() {
                 key={action.label}
                 activeOpacity={0.75}
                 className="items-center"
+                onPress={() => {
+                  if (action.label === "Leen uit") router.push("/leen-uit");
+                }}
               >
                 <View className="w-16 h-16 bg-white rounded-2xl items-center justify-center shadow shadow-orange-100">
                   <Icon size={26} color="#f97316" strokeWidth={1.8} />
