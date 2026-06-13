@@ -1,60 +1,50 @@
 import React, { useRef, useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Dimensions,
-} from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
+
+const stickerShadow = {
+  shadowColor: "#2D2A26",
+  shadowOffset: { width: 3, height: 3 },
+  shadowOpacity: 1,
+  shadowRadius: 0,
+  elevation: 4,
+};
 
 const SLIDES = [
   {
     id: "1",
     emoji: "🏘️",
     title: "Leen van vrienden\n& buren",
-    description:
-      "Heb je iets nodig? Kijk eerst bij de mensen om je heen. Van een boormachine tot een tent, je buren hebben het vast.",
-    bg: "#fff7ed",
-    accent: "#f97316",
-    bubbleColor: "#fed7aa",
-    decorEmojis: ["🔧", "🎸", "🚲", "📷"],
+    description: "Heb je iets nodig? Kijk eerst bij de mensen om je heen. Van een boormachine tot een tent — je buren hebben het vast.",
+    bubble: "bg-mustard",
+    decor: ["🔧", "🎸", "🚲", "📷"],
   },
   {
     id: "2",
     emoji: "📍",
     title: "Vind items in\njouw buurt",
-    description:
-      "Zoek op wat je nodig hebt en zie meteen wie in de buurt het heeft. Alles dichtbij, alles makkelijk.",
-    bg: "#fffbeb",
-    accent: "#d97706",
-    bubbleColor: "#fde68a",
-    decorEmojis: ["🗺️", "📦", "🏠", "⛺"],
+    description: "Zoek op wat je nodig hebt en zie meteen wie in de buurt het heeft. Alles dichtbij, alles makkelijk.",
+    bubble: "bg-sage",
+    decor: ["🗺️", "📦", "🏠", "⛺"],
   },
   {
     id: "3",
     emoji: "💸",
     title: "Leen uit\n& verdien terug",
-    description:
-      "Staat er iets stof te verzamelen? Zet het op Leenmaat en help een ander en verdien er misschien wat mee.",
-    bg: "#fff1f2",
-    accent: "#e11d48",
-    bubbleColor: "#fecdd3",
-    decorEmojis: ["🎯", "💡", "🛹", "🧰"],
+    description: "Staat er iets stof te verzamelen? Zet het op Leenmaat en help een ander — en verdien er misschien wat mee.",
+    bubble: "bg-terracotta",
+    decor: ["🎯", "💡", "🛹", "🧰"],
   },
   {
     id: "4",
     emoji: "🤝",
     title: "Samen delen,\nsamen besparen",
-    description:
-      "Minder kopen, meer doen. Leenmaat helpt je community sterker te maken één leen tegelijk.",
-    bg: "#f0fdf4",
-    accent: "#16a34a",
-    bubbleColor: "#bbf7d0",
-    decorEmojis: ["🌱", "♻️", "❤️", "✨"],
+    description: "Minder kopen, meer doen. Leenmaat helpt je community sterker te maken — één leen tegelijk.",
+    bubble: "bg-lavender",
+    decor: ["🌱", "♻️", "❤️", "✨"],
   },
 ];
 
@@ -70,151 +60,94 @@ export default function OnboardingScreen() {
     if (isLast) {
       router.replace("/(tabs)");
     } else {
-      const nextIndex = currentIndex + 1;
-      scrollRef.current?.scrollTo({ x: nextIndex * width, animated: true });
-      setCurrentIndex(nextIndex);
+      const next = currentIndex + 1;
+      scrollRef.current?.scrollTo({ x: next * width, animated: true });
+      setCurrentIndex(next);
     }
   };
 
-  const handleSkip = () => router.replace("/(tabs)");
-
   return (
-    <View style={{ flex: 1, backgroundColor: current.bg }}>
-      <SafeAreaView style={{ flex: 1 }} edges={["top", "bottom"]}>
-        {/* Skip button */}
-        <View style={{ height: 40, flexDirection: "row", justifyContent: "flex-end", paddingHorizontal: 20, paddingTop: 4 }}>
-          {!isLast && (
-            <TouchableOpacity onPress={handleSkip} style={{ padding: 8 }}>
-              <Text style={{ fontSize: 14, fontWeight: "600", color: "#9ca3af" }}>
-                Overslaan
-              </Text>
-            </TouchableOpacity>
-          )}
-        </View>
+    <SafeAreaView className="flex-1 bg-cream" edges={["top", "bottom"]}>
+      {/* Skip */}
+      <View className="h-10 flex-row justify-end px-5 pt-1">
+        {!isLast && (
+          <TouchableOpacity onPress={() => router.replace("/(tabs)")} className="py-2 px-3">
+            <Text className="font-body-bold text-sm text-ink-soft">Overslaan</Text>
+          </TouchableOpacity>
+        )}
+      </View>
 
-        {/* Slides */}
-        <ScrollView
-          ref={scrollRef}
-          horizontal
-          pagingEnabled
-          scrollEnabled
-          showsHorizontalScrollIndicator={false}
-          onMomentumScrollEnd={(e) => {
-            const index = Math.round(e.nativeEvent.contentOffset.x / width);
-            setCurrentIndex(index);
-          }}
-          style={{ flex: 1 }}
-        >
-          {SLIDES.map((slide) => (
-            <View
-              key={slide.id}
-              style={{
-                width,
-                flex: 1,
-                backgroundColor: slide.bg,
-                alignItems: "center",
-                justifyContent: "center",
-                paddingHorizontal: 32,
+      <ScrollView
+        ref={scrollRef}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onMomentumScrollEnd={(e) => setCurrentIndex(Math.round(e.nativeEvent.contentOffset.x / width))}
+        className="flex-1"
+      >
+        {SLIDES.map((slide) => (
+          <View key={slide.id} style={{ width }} className="flex-1 items-center justify-center px-8">
+            {/* Illustration */}
+            <View className="relative w-60 h-60 items-center justify-center mb-8">
+              <View className={`absolute w-52 h-52 rounded-3xl ${slide.bubble} border-2 border-ink opacity-30`} />
+              {[
+                { pos: "top-2 left-2", emoji: slide.decor[0] },
+                { pos: "top-2 right-2", emoji: slide.decor[1] },
+                { pos: "bottom-2 left-2", emoji: slide.decor[2] },
+                { pos: "bottom-2 right-2", emoji: slide.decor[3] },
+              ].map((d, i) => (
+                <View
+                  key={i}
+                  style={stickerShadow}
+                  className={`absolute ${d.pos} w-12 h-12 bg-white rounded-2xl border-2 border-ink items-center justify-center`}
+                >
+                  <Text className="text-2xl">{d.emoji}</Text>
+                </View>
+              ))}
+              <View style={stickerShadow} className="w-24 h-24 bg-white rounded-3xl border-2 border-ink items-center justify-center">
+                <Text style={{ fontSize: 48 }}>{slide.emoji}</Text>
+              </View>
+            </View>
+
+            <Text className="font-heading-bold text-3xl text-ink text-center leading-tight">
+              {slide.title}
+            </Text>
+            <Text className="font-body text-[15px] text-ink-soft text-center mt-4 leading-6">
+              {slide.description}
+            </Text>
+          </View>
+        ))}
+      </ScrollView>
+
+      {/* Bottom */}
+      <View className="px-8 pb-6">
+        <View className="flex-row justify-center mb-8 gap-2">
+          {SLIDES.map((_, i) => (
+            <TouchableOpacity
+              key={i}
+              onPress={() => {
+                scrollRef.current?.scrollTo({ x: i * width, animated: true });
+                setCurrentIndex(i);
               }}
             >
-              {/* Illustration */}
-              <View style={{ width: 256, height: 256, alignItems: "center", justifyContent: "center", marginBottom: 32 }}>
-                <View style={{
-                  position: "absolute",
-                  width: 224,
-                  height: 224,
-                  borderRadius: 112,
-                  backgroundColor: slide.bubbleColor,
-                  opacity: 0.5,
-                }} />
-                {[
-                  { top: 8, left: 16 },
-                  { top: 8, right: 16 },
-                  { bottom: 8, left: 16 },
-                  { bottom: 8, right: 16 },
-                ].map((pos, i) => (
-                  <View key={i} style={{
-                    position: "absolute",
-                    width: 48,
-                    height: 48,
-                    backgroundColor: "white",
-                    borderRadius: 16,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    shadowColor: "#000",
-                    shadowOpacity: 0.06,
-                    shadowRadius: 4,
-                    elevation: 2,
-                    ...pos,
-                  }}>
-                    <Text style={{ fontSize: 24 }}>{slide.decorEmojis[i]}</Text>
-                  </View>
-                ))}
-                <View style={{
-                  width: 96,
-                  height: 96,
-                  backgroundColor: "white",
-                  borderRadius: 24,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  shadowColor: "#000",
-                  shadowOpacity: 0.1,
-                  shadowRadius: 8,
-                  elevation: 4,
-                }}>
-                  <Text style={{ fontSize: 52 }}>{slide.emoji}</Text>
-                </View>
-              </View>
-
-              <Text style={{ fontSize: 30, fontWeight: "bold", color: "#1f2937", textAlign: "center", lineHeight: 38 }}>
-                {slide.title}
-              </Text>
-              <Text style={{ fontSize: 16, color: "#6b7280", textAlign: "center", marginTop: 16, lineHeight: 24 }}>
-                {slide.description}
-              </Text>
-            </View>
+              <View
+                className={`h-2.5 rounded-full border-2 border-ink ${i === currentIndex ? "w-7 bg-terracotta" : "w-2.5 bg-white"}`}
+              />
+            </TouchableOpacity>
           ))}
-        </ScrollView>
-
-        {/* Bottom */}
-        <View style={{ paddingHorizontal: 32, paddingBottom: 24 }}>
-          {/* Dots */}
-          <View style={{ flexDirection: "row", justifyContent: "center", marginBottom: 32, gap: 8 }}>
-            {SLIDES.map((_, i) => (
-              <TouchableOpacity
-                key={i}
-                onPress={() => {
-                  scrollRef.current?.scrollTo({ x: i * width, animated: true });
-                  setCurrentIndex(i);
-                }}
-              >
-                <View style={{
-                  height: 8,
-                  borderRadius: 4,
-                  width: i === currentIndex ? 24 : 8,
-                  backgroundColor: i === currentIndex ? current.accent : "#d1d5db",
-                }} />
-              </TouchableOpacity>
-            ))}
-          </View>
-
-          {/* Button */}
-          <TouchableOpacity
-            onPress={handleNext}
-            activeOpacity={0.85}
-            style={{
-              backgroundColor: current.accent,
-              paddingVertical: 16,
-              borderRadius: 16,
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>
-              {isLast ? "Aan de slag!" : "Volgende"}
-            </Text>
-          </TouchableOpacity>
         </View>
-      </SafeAreaView>
-    </View>
+
+        <TouchableOpacity
+          onPress={handleNext}
+          activeOpacity={0.85}
+          style={stickerShadow}
+          className="w-full py-4 rounded-2xl items-center bg-terracotta border-2 border-ink"
+        >
+          <Text className="font-heading-bold text-base text-white">
+            {isLast ? "Aan de slag" : "Volgende"}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }

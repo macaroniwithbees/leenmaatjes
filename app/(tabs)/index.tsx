@@ -2,65 +2,57 @@ import React from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
-import { PlusCircle, Search, Package, Users } from "lucide-react-native";
+import { PlusCircle, Search, Package, Users, MapPin } from "lucide-react-native";
+
+const stickerShadow = {
+  shadowColor: "#2D2A26",
+  shadowOffset: { width: 3, height: 3 },
+  shadowOpacity: 1,
+  shadowRadius: 0,
+  elevation: 4,
+};
 
 const ACTIVE_LOANS = [
-  {
-    id: "1",
-    item: "Boormachine",
-    from: "Sanne",
-    dueDate: "8 jun",
-    color: "bg-amber-100",
-    accent: "text-amber-600",
-    dot: "bg-amber-400",
-  },
-  {
-    id: "2",
-    item: "Campingstoel",
-    from: "Joren",
-    dueDate: "12 jun",
-    color: "bg-rose-100",
-    accent: "text-rose-500",
-    dot: "bg-rose-400",
-  },
+  { id: "1", item: "Boormachine", from: "Sanne", dueDate: "8 jun", bg: "bg-mustard" },
+  { id: "2", item: "Campingstoel", from: "Joren", dueDate: "12 jun", bg: "bg-sage" },
 ];
 
 const NEARBY_ITEMS = [
-  { id: "1", emoji: "🎸", label: "Gitaar", owner: "Lisa", distance: "0.3 km" },
-  { id: "2", emoji: "🚲", label: "Fiets", owner: "Tom", distance: "0.8 km" },
-  { id: "3", emoji: "⛺", label: "Tent", owner: "Mees", distance: "1.2 km" },
-  { id: "4", emoji: "📷", label: "Camera", owner: "Nora", distance: "1.5 km" },
+  { id: "1", emoji: "🎸", label: "Gitaar", owner: "Lisa", distance: "0.3 km", bg: "bg-mustard" },
+  { id: "2", emoji: "🚲", label: "Fiets", owner: "Tom", distance: "0.8 km", bg: "bg-sage" },
+  { id: "3", emoji: "⛺", label: "Tent", owner: "Mees", distance: "1.2 km", bg: "bg-terracotta" },
+  { id: "4", emoji: "📷", label: "Camera", owner: "Nora", distance: "1.5 km", bg: "bg-lavender" },
 ];
 
 const QUICK_ACTIONS = [
-  { icon: PlusCircle, label: "Leen uit" },
-  { icon: Search, label: "Zoek item" },
-  { icon: Package, label: "Mijn items" },
-  { icon: Users, label: "Vrienden" },
+  { icon: PlusCircle, label: "Leen uit", bg: "bg-terracotta" },
+  { icon: Search, label: "Zoek item", bg: "bg-sage" },
+  { icon: Package, label: "Mijn items", bg: "bg-mustard" },
+  { icon: Users, label: "Vrienden", bg: "bg-lavender" },
 ];
 
 export default function HomeScreen() {
   const router = useRouter();
 
   return (
-    <SafeAreaView className="flex-1 bg-orange-50" edges={["top"]}>
-      <View className="px-5 pt-2 pb-3 bg-orange-50 flex-row items-center justify-between">
-        <Text className="text-xl font-bold text-orange-500">Leenmaat</Text>
-        <View className="w-9 h-9 bg-orange-100 rounded-full items-center justify-center">
-          <Text className="text-sm font-bold text-orange-500">F</Text>
+    <SafeAreaView className="flex-1 bg-cream" edges={["top"]}>
+      {/* Header */}
+      <View className="px-5 pt-2 pb-1 flex-row items-center justify-between">
+        <Text className="font-heading-bold text-2xl text-ink">
+          leenmaat<Text className="text-terracotta">.</Text>
+        </Text>
+        <View className="w-9 h-9 rounded-full bg-mustard border-2 border-ink items-center justify-center">
+          <Text className="font-heading-bold text-sm text-ink">F</Text>
         </View>
       </View>
 
-      <ScrollView
-        contentContainerStyle={{ paddingBottom: 32 }}
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView contentContainerStyle={{ paddingBottom: 32 }} showsVerticalScrollIndicator={false}>
         {/* Greeting */}
-        <View className="px-5 pt-2 pb-2">
-          <Text className="text-3xl font-bold text-gray-800 leading-tight">
+        <View className="px-5 pt-3 pb-1">
+          <Text className="font-heading-bold text-3xl text-ink leading-tight">
             Hoi Floris! 
           </Text>
-          <Text className="text-base text-gray-500 mt-1">
+          <Text className="font-body text-sm text-ink-soft mt-1.5">
             Wat wil je vandaag lenen of uitlenen?
           </Text>
         </View>
@@ -72,16 +64,17 @@ export default function HomeScreen() {
             return (
               <TouchableOpacity
                 key={action.label}
-                activeOpacity={0.75}
+                activeOpacity={0.8}
+                onPress={() => { if (action.label === "Leen uit") router.push("/leen-uit"); }}
                 className="items-center"
-                onPress={() => {
-                  if (action.label === "Leen uit") router.push("/leen-uit");
-                }}
               >
-                <View className="w-16 h-16 bg-white rounded-2xl items-center justify-center shadow shadow-orange-100">
-                  <Icon size={26} color="#f97316" strokeWidth={1.8} />
+                <View
+                  style={stickerShadow}
+                  className={`w-[60px] h-[60px] rounded-2xl ${action.bg} border-2 border-ink items-center justify-center`}
+                >
+                  <Icon size={24} color="#2D2A26" strokeWidth={2.2} />
                 </View>
-                <Text className="text-xs text-gray-500 mt-1.5 font-medium">
+                <Text className="font-body-medium text-[11px] text-ink mt-2">
                   {action.label}
                 </Text>
               </TouchableOpacity>
@@ -90,51 +83,42 @@ export default function HomeScreen() {
         </View>
 
         {/* Active loans */}
-        <View className="mt-7 px-5">
-          <View className="flex-row justify-between items-center mb-3">
-            <Text className="text-lg font-bold text-gray-800">
-              Actieve leningen
-            </Text>
+        <View className="mt-8 pl-5">
+          <View className="flex-row justify-between items-center mb-3 pr-5">
+            <Text className="font-heading text-lg text-ink">Actieve leningen</Text>
             <TouchableOpacity>
-              <Text className="text-sm text-orange-400 font-semibold">
-                Alles zien
-              </Text>
+              <Text className="font-body-bold text-xs text-terracotta">Alles zien →</Text>
             </TouchableOpacity>
           </View>
 
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingRight: 20 }}>
             {ACTIVE_LOANS.map((loan) => (
               <TouchableOpacity
                 key={loan.id}
-                activeOpacity={0.8}
-                className={`mr-3 p-4 rounded-2xl ${loan.color} w-44`}
+                activeOpacity={0.85}
+                style={stickerShadow}
+                className={`mr-4 p-4 rounded-2xl ${loan.bg} w-44 border-2 border-ink`}
               >
-                <View className="flex-row items-center mb-3">
-                  <View className="w-8 h-8 rounded-full bg-white items-center justify-center">
-                    <Text className={`text-sm font-bold ${loan.accent}`}>
-                      {loan.from[0]}
-                    </Text>
-                  </View>
-                  <Text className="ml-2 text-sm font-semibold text-gray-700">
-                    {loan.from}
-                  </Text>
+                <View className="w-8 h-8 rounded-full bg-cream border-2 border-ink items-center justify-center mb-2.5">
+                  <Text className="font-heading-bold text-sm text-ink">{loan.from[0]}</Text>
                 </View>
-                <Text className="text-base font-bold text-gray-800">
-                  {loan.item}
+                <Text className="font-heading text-base text-ink">{loan.item}</Text>
+                <Text className="font-body-medium text-xs text-ink mt-1 opacity-70">
+                  van {loan.from}
                 </Text>
-                <View className="flex-row items-center mt-2">
-                  <View className={`w-2 h-2 rounded-full ${loan.dot} mr-1.5`} />
-                  <Text className={`text-xs font-medium ${loan.accent}`}>
-                    Terug vóór {loan.dueDate}
+                <View className="mt-2.5 self-start bg-cream px-2 py-1 rounded-lg border-2 border-ink">
+                  <Text className="font-body-bold text-[10px] text-ink">
+                    terug vóór {loan.dueDate}
                   </Text>
                 </View>
               </TouchableOpacity>
             ))}
+
             <TouchableOpacity
-              activeOpacity={0.75}
-              className="w-44 min-h-[120px] border-2 border-dashed border-orange-200 rounded-2xl items-center justify-center px-4"
+              activeOpacity={0.8}
+              className="w-44 min-h-[140px] rounded-2xl border-2 border-dashed border-ink items-center justify-center px-4"
             >
-              <Text className="text-xs text-center text-gray-400 font-medium">
+              <Text className="font-body-medium text-xs text-ink-soft text-center">
                 Leen iets uit aan een vriend
               </Text>
             </TouchableOpacity>
@@ -142,40 +126,33 @@ export default function HomeScreen() {
         </View>
 
         {/* Nearby items */}
-        <View className="mt-7 px-5">
+        <View className="px-5 mt-8">
           <View className="flex-row justify-between items-center mb-3">
-            <Text className="text-lg font-bold text-gray-800">
-              In jouw buurt
-            </Text>
+            <Text className="font-heading text-lg text-ink">In jouw buurt</Text>
             <TouchableOpacity>
-              <Text className="text-sm text-orange-400 font-semibold">
-                Kaart
-              </Text>
+              <Text className="font-body-bold text-xs text-terracotta">Kaart →</Text>
             </TouchableOpacity>
           </View>
-          <View className="space-y-2">
+
+          <View className="gap-3">
             {NEARBY_ITEMS.map((item) => (
               <TouchableOpacity
                 key={item.id}
-                activeOpacity={0.8}
+                activeOpacity={0.85}
                 onPress={() => router.push(`/item/${item.id}`)}
-                className="flex-row items-center bg-white rounded-2xl px-4 py-3 shadow-sm shadow-orange-100"
+                style={stickerShadow}
+                className="flex-row items-center bg-white rounded-2xl px-3.5 py-3 border-2 border-ink"
               >
-                <View className="w-11 h-11 bg-orange-50 rounded-xl items-center justify-center">
+                <View className={`w-12 h-12 rounded-xl ${item.bg} border-2 border-ink items-center justify-center`}>
                   <Text className="text-xl">{item.emoji}</Text>
                 </View>
                 <View className="ml-3 flex-1">
-                  <Text className="text-sm font-bold text-gray-800">
-                    {item.label}
-                  </Text>
-                  <Text className="text-xs text-gray-400 mt-0.5">
-                    van {item.owner}
-                  </Text>
+                  <Text className="font-heading text-[15px] text-ink">{item.label}</Text>
+                  <Text className="font-body text-xs text-ink-soft mt-0.5">van {item.owner}</Text>
                 </View>
-                <View className="bg-orange-100 px-2.5 py-1 rounded-full">
-                  <Text className="text-xs font-semibold text-orange-500">
-                    {item.distance}
-                  </Text>
+                <View className="flex-row items-center gap-1 bg-cream px-2 py-1 rounded-lg border-2 border-ink">
+                  <MapPin size={11} color="#2D2A26" strokeWidth={2.5} />
+                  <Text className="font-body-bold text-[11px] text-ink">{item.distance}</Text>
                 </View>
               </TouchableOpacity>
             ))}
@@ -183,20 +160,20 @@ export default function HomeScreen() {
         </View>
 
         {/* CTA banner */}
-        <View className="mx-5 mt-7 bg-orange-400 rounded-2xl px-5 py-5">
-          <Text className="text-white font-bold text-base">
-            Heb je iets te leen? 
-          </Text>
-          <Text className="text-orange-100 text-sm mt-1 mb-3">
+        <View
+          style={stickerShadow}
+          className="mx-5 mt-8 bg-terracotta rounded-3xl p-5 border-2 border-ink"
+        >
+          <Text className="font-heading-bold text-lg text-white">Heb je iets te leen?</Text>
+          <Text className="font-body text-sm text-white/90 mt-1.5 mb-4">
             Help je buren en verdien wat terug.
           </Text>
           <TouchableOpacity
-            className="bg-white self-start px-4 py-2 rounded-xl"
             activeOpacity={0.85}
+            onPress={() => router.push("/leen-uit")}
+            className="self-start bg-cream px-4.5 py-2.5 rounded-xl border-2 border-ink"
           >
-            <Text className="text-orange-500 text-sm font-bold">
-              Item toevoegen
-            </Text>
+            <Text className="font-body-bold text-[13px] text-ink">Item toevoegen</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
