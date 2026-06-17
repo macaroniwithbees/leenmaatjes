@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
-import { Star, Package, HandHelping, Settings, ChevronRight, MapPin } from "lucide-react-native";
+import { Star, Package, HandHelping, Settings, ChevronRight, MapPin, StarIcon, Package2 } from "lucide-react-native";
 
 const stickerShadow = {
   shadowColor: "#2D2A26",
@@ -13,9 +13,9 @@ const stickerShadow = {
 };
 
 const STATS = [
-  { id: "1", label: "Uitgeleend", value: "12", emoji: "📦", bg: "bg-mustard" },
-  { id: "2", label: "Geleend", value: "8", emoji: "🤝", bg: "bg-sage" },
-  { id: "3", label: "Beoordeling", value: "4.9", emoji: "⭐", bg: "bg-lavender" },
+  { id: "1", label: "Uitgeleend", value: "12", icon: Package2, bg: "bg-mustard" },
+  { id: "2", label: "Geleend", value: "8", icon: HandHelping, bg: "bg-sage" },
+  { id: "3", label: "Beoordeling", value: "4.9", icon: StarIcon, bg: "bg-lavender" },
 ];
 
 const MY_ITEMS = [
@@ -66,13 +66,16 @@ export default function ProfielScreen() {
 
         {/* Stats */}
         <View className="flex-row px-5 mt-4 gap-3">
-          {STATS.map((stat) => (
+          {STATS.map((stat) => {
+            const Icon = stat.icon;
+            return (
             <View key={stat.id} style={stickerShadow} className={`flex-1 ${stat.bg} rounded-2xl p-3 border-2 border-ink items-center`}>
-              <Text style={{ fontSize: 20 }}>{stat.emoji}</Text>
+              <Icon size={24} color="#2D2A26" strokeWidth={2.2} />
               <Text className="font-heading-bold text-lg text-ink mt-1">{stat.value}</Text>
               <Text className="font-body text-[11px] text-ink mt-0.5 text-center">{stat.label}</Text>
             </View>
-          ))}
+          )})
+        }
         </View>
 
         {/* My items */}
