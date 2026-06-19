@@ -41,7 +41,7 @@ export default function ProfielScreen() {
           <Text className="font-heading-bold text-2xl text-ink">
             Profiel<Text className="text-terracotta">.</Text>
           </Text>
-          <TouchableOpacity style={stickerShadow} className="w-9 h-9 bg-white rounded-xl border-2 border-ink items-center justify-center">
+          <TouchableOpacity onPress={() => router.push("/instellingen")} style={stickerShadow} className="w-9 h-9 bg-white rounded-xl border-2 border-ink items-center justify-center">
             <Settings size={18} color="#2D2A26" strokeWidth={2.2} />
           </TouchableOpacity>
         </View>
@@ -69,13 +69,14 @@ export default function ProfielScreen() {
           {STATS.map((stat) => {
             const Icon = stat.icon;
             return (
-            <View key={stat.id} style={stickerShadow} className={`flex-1 ${stat.bg} rounded-2xl p-3 border-2 border-ink items-center`}>
-              <Icon size={24} color="#2D2A26" strokeWidth={2.2} />
-              <Text className="font-heading-bold text-lg text-ink mt-1">{stat.value}</Text>
-              <Text className="font-body text-[11px] text-ink mt-0.5 text-center">{stat.label}</Text>
-            </View>
-          )})
-        }
+              <View key={stat.id} style={stickerShadow} className={`flex-1 ${stat.bg} rounded-2xl p-3 border-2 border-ink items-center`}>
+                <Icon size={24} color="#2D2A26" strokeWidth={2.2} />
+                <Text className="font-heading-bold text-lg text-ink mt-1">{stat.value}</Text>
+                <Text className="font-body text-[11px] text-ink mt-0.5 text-center">{stat.label}</Text>
+              </View>
+            )
+          })
+          }
         </View>
 
         {/* My items */}

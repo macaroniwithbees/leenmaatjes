@@ -28,6 +28,7 @@ export default function RootLayout() {
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="item/[id]" />
       <Stack.Screen name="leen-uit" />
+      <Stack.Screen name="instellingen" />
     </Stack>
   );
 }
