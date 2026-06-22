@@ -190,6 +190,7 @@ export default function ItemDetailScreen() {
         <TouchableOpacity
           activeOpacity={0.85}
           style={stickerShadow}
+          onPress={() => router.push(`/chat/${item.owner.toLowerCase()}`)}
           className="flex-1 flex-row items-center justify-center bg-white border-2 border-ink rounded-2xl py-4 gap-2"
         >
           <MessageCircle size={18} color="#2D2A26" strokeWidth={2.2} />
